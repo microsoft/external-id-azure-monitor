@@ -34,7 +34,6 @@ See a security issue with some contents of this repo?
 
 All the reports in this repo are based on [Azure Monitor Workbooks](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/workbooks-overview) which provide a flexible canvas for data analysis and the creation of rich visual reports within the Azure portal.
 
->> WIP
 
 ## Contributing
 
