@@ -2,64 +2,48 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "mspOfferName": {
+        "externalTenantId": {
             "type": "string",
             "metadata": {
-                "description": "Specify a unique name for your offer"
-            },
-            "defaultValue": "<to be filled out by MSP> Specify a title for your offer"
+                "description": "Specify the tenant id of the External tenant"
+            }
         },
-        "mspOfferDescription": {
+        "groupId": {
             "type": "string",
             "metadata": {
-                "description": "Name of the Managed Service Provider offering"
-            },
-            "defaultValue": "<to be filled out by MSP> Provide a brief description of your offer"
-        },
-        "managedByTenantId": {
-            "type": "string",
-            "metadata": {
-                "description": "Specify the tenant id of the Managed Service Provider"
-            },
-            "defaultValue": "<to be filled out by MSP> Provide your tenant id"
-        },
-        "authorizations": {
-            "type": "array",
-            "metadata": {
-                "description": "Specify an array of objects, containing tuples of Azure Active Directory principalId, a Azure roleDefinitionId, and an optional principalIdDisplayName. The roleDefinition specified is granted to the principalId in the provider's Active Directory and the principalIdDisplayName is visible to customers."
-            },
-            "defaultValue": [
-                { 
-                    "principalId": "<Replace with group's OBJECT ID>",
-                    "principalIdDisplayName": "Azure External ID tenant administrators",
-                    "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
-                }
-            ]
+                "description": "Specify the group id of the admin in the External tenant"
+            }
         },
         "rgName": {
-            "type": "string",
-            "defaultValue": "<Replace with Resource Group's Name e.g. az-monitor-rg>"
+            "type": "string"
         }              
     },
     "variables": {
-        "mspRegistrationName": "[guid(parameters('mspOfferName'))]",
-        "mspAssignmentName": "[guid(parameters('mspOfferName'))]"
+        "mspRegistrationName": "[guid(parameters('externalTenantId'))]",
+        "mspAssignmentName": "[guid(parameters('externalTenantId'))]"
     },
     "resources": [
         {
             "type": "Microsoft.ManagedServices/registrationDefinitions",
-            "apiVersion": "2019-06-01",
+            "apiVersion": "2022-10-01",
             "name": "[variables('mspRegistrationName')]",
             "properties": {
-                "registrationDefinitionName": "[parameters('mspOfferName')]",
-                "description": "[parameters('mspOfferDescription')]",
-                "managedByTenantId": "[parameters('managedByTenantId')]",
-                "authorizations": "[parameters('authorizations')]"
+                "registrationDefinitionName": "ExternalTenantSubscriptionConnection",
+                "description": "Enables an admin group from the External tenant to set up diagnostic settings and send logs to Log Analytics workspace in the Workforce tenant.",
+                "managedByTenantId": "[parameters('externalTenantId')]",
+                "authorizations":
+                [
+                  {
+                    "principalId": "[parameters('groupId')]",
+                    "principalIdDisplayName": "DiagnosticSettingsAdmin",
+                    "roleDefinitionId": "92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+                  }
+                ]
             }
         },
         {
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2018-05-01",
+            "apiVersion": "2021-04-01",
             "name": "rgAssignment",
             "resourceGroup": "[parameters('rgName')]",
             "dependsOn": [
@@ -74,7 +58,7 @@
                     "resources": [
                         {
                             "type": "Microsoft.ManagedServices/registrationAssignments",
-                            "apiVersion": "2019-06-01",
+                            "apiVersion": "2022-10-01",
                             "name": "[variables('mspAssignmentName')]",
                             "properties": {
                                 "registrationDefinitionId": "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
@@ -84,15 +68,5 @@
                 }
             }
         }
-    ],
-    "outputs": {
-        "mspOfferName": {
-            "type": "string",
-            "value": "[concat('Managed by', ' ', parameters('mspOfferName'))]"
-        },
-        "authorizations": {
-            "type": "array",
-            "value": "[parameters('authorizations')]"
-        }
-    }
+    ]
 }
