@@ -34,6 +34,11 @@ See a security issue with some contents of this repo?
 
 All the reports in this repo are based on [Azure Monitor Workbooks](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/workbooks-overview) which provide a flexible canvas for data analysis and the creation of rich visual reports within the Azure portal.
 
+### Deploy workbooks via ARM template
+
+| Name      | Deploy |
+| ----------- | ----------- |
+| Authentications Workbook      |<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FauthenticationsWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
 
 ## Contributing
 
