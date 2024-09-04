@@ -1,0 +1,50 @@
+{
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workbookDisplayName": {
+            "type": "string",
+            "defaultValue": "MFA Workbook",
+            "metadata": {
+                "description": "The friendly name for the workbook that is used in the Gallery or Saved List.  This name must be unique within a resource group."
+            }
+        },
+        "workSpaceName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of workspace where this workbook will be deployed"
+            }
+        },
+        "workbookId": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "The unique guid for this workbook instance"
+            }
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('workbookId')]",
+            "type": "microsoft.insights/workbooks",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2018-06-17-preview",
+            "dependsOn": [],
+            "kind": "shared",
+            "properties": {
+                "displayName": "[parameters('workbookDisplayName')]",
+                "serializedData": "{\"version\":\"Notebook/1.0\",\"items\":[{\"type\":9,\"content\":{\"version\":\"KqlParameterItem/1.0\",\"parameters\":[{\"id\":\"12e24ac4-d5f3-42ec-9c32-118fd5438150\",\"version\":\"KqlParameterItem/1.0\",\"name\":\"TimeRange\",\"type\":4,\"isRequired\":true,\"value\":{\"durationMs\":7776000000},\"typeSettings\":{\"selectableValues\":[{\"durationMs\":300000},{\"durationMs\":900000},{\"durationMs\":1800000},{\"durationMs\":3600000},{\"durationMs\":14400000},{\"durationMs\":43200000},{\"durationMs\":86400000},{\"durationMs\":172800000},{\"durationMs\":259200000},{\"durationMs\":604800000},{\"durationMs\":1209600000},{\"durationMs\":2419200000},{\"durationMs\":2592000000},{\"durationMs\":5184000000},{\"durationMs\":7776000000}],\"allowCustom\":true}}],\"style\":\"pills\",\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\"},\"customWidth\":\"100\",\"name\":\"TimeRange\"},{\"type\":11,\"content\":{\"version\":\"LinkItem/1.0\",\"style\":\"tabs\",\"links\":[{\"id\":\"71ab978a-c66d-47dc-aa0a-6a1a1b5d4d93\",\"cellValue\":\"selectedTab\",\"linkTarget\":\"parameter\",\"linkLabel\":\"MFA Usage and Failures Overview\",\"subTarget\":\"Overview\",\"postText\":\"Post Text\",\"style\":\"link\"},{\"id\":\"4ba27946-dc0b-4978-b5d6-97591a3bac6e\",\"cellValue\":\"selectedTab\",\"linkTarget\":\"parameter\",\"linkLabel\":\"MFA Failures Analysis\",\"subTarget\":\"Details\",\"postText\":\"Pretext\",\"style\":\"link\"}]},\"name\":\"links - 5\"},{\"type\":1,\"content\":{\"json\":\"A chart to help you identify general trends with the MFA requests for your tenant.\"},\"customWidth\":\"100\",\"conditionalVisibility\":{\"parameterName\":\"selectedTab\",\"comparison\":\"isEqualTo\",\"value\":\"Overview\"},\"name\":\"text - 2\"},{\"type\":1,\"content\":{\"json\":\"A breakdown of MFA failures by MFA Methods and Failure Reasons\"},\"customWidth\":\"100\",\"conditionalVisibility\":{\"parameterName\":\"selectedTab\",\"comparison\":\"isEqualTo\",\"value\":\"Details\"},\"name\":\"text - 2 - Copy\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"AuditLogs\\n| where OperationName contains \\\"verify\\\" \\n| extend addtionalDetails = tostring(AdditionalDetails)\\n| where addtionalDetails contains \\\"VerificationMethod\\\"\\n| extend ad1=extractjson(\\\"$.[5].value\\\",tostring(AdditionalDetails))\\n| extend ad2 = extractjson(\\\"$.[4].value\\\",tostring(AdditionalDetails))\\n| project TimeGenerated, Result, CorrelationId\\n| order by TimeGenerated\\n| summarize Successful=count(), Failed=countif(Result == \\\"Success\\\") by bin(TimeGenerated, 1d)\\n| render timechart\",\"size\":1,\"title\":\"MFA Success vs Failures\",\"timeContext\":{\"durationMs\":2592000000},\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\",\"chartSettings\":{\"seriesLabelSettings\":[{\"seriesName\":\"Successful\",\"label\":\"Successful MFA Requests\"},{\"seriesName\":\"Failed\",\"label\":\"Failed MFA Requests\"}]}},\"conditionalVisibility\":{\"parameterName\":\"selectedTab\",\"comparison\":\"isEqualTo\",\"value\":\"Overview\"},\"name\":\"query - 2\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"AuditLogs\\n| where OperationName contains \\\"verify\\\" \\n| extend addtionalDetails = tostring(AdditionalDetails)\\n| where addtionalDetails contains \\\"VerificationMethod\\\"\\n| extend ad1=extractjson(\\\"$.[5].value\\\",tostring(AdditionalDetails))\\n| extend ad2 = extractjson(\\\"$.[4].value\\\",tostring(AdditionalDetails))\\n| project TimeGenerated, CorrelationId,Policy=extractjson(\\\"$.[1].value\\\",tostring(AdditionalDetails)),Method=strcat(ad1,\\\",\\\",ad2), Result, ResultDescription, OperationName, addtionalDetails\\n| summarize count() by Method\",\"size\":0,\"title\":\"MFA Failures by Method\",\"timeContext\":{\"durationMs\":86400000},\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\"},\"conditionalVisibility\":{\"parameterName\":\"selectedTab\",\"comparison\":\"isEqualTo\",\"value\":\"Details\"},\"name\":\"query - 4\"},{\"type\":3,\"content\":{\"version\":\"KqlItem/1.0\",\"query\":\"AuditLogs\\n| where OperationName contains \\\"verify\\\" \\n| extend addtionalDetails = tostring(AdditionalDetails)\\n| where addtionalDetails contains \\\"VerificationMethod\\\"\\n| extend ad1=extractjson(\\\"$.[5].value\\\",tostring(AdditionalDetails))\\n| extend ad2 = extractjson(\\\"$.[4].value\\\",tostring(AdditionalDetails))\\n| project TimeGenerated, CorrelationId,Policy=extractjson(\\\"$.[1].value\\\",tostring(AdditionalDetails)),Method=strcat(ad1,\\\",\\\",ad2), Result, ResultDescription, OperationName, addtionalDetails\\n| summarize count() by ResultDescription\",\"size\":0,\"title\":\"MFA Failures by Reason\",\"timeContext\":{\"durationMs\":86400000},\"queryType\":0,\"resourceType\":\"microsoft.operationalinsights/workspaces\"},\"conditionalVisibility\":{\"parameterName\":\"selectedTab\",\"comparison\":\"isEqualTo\",\"value\":\"Details\"},\"name\":\"query - 4 - Copy\"}],\"isLocked\":false}",
+                "version": "1.0",
+                "sourceId": "[concat(resourceGroup().id,'/','providers/Microsoft.OperationalInsights/workspaces','/',parameters('workSpaceName'))]",
+                "category": "workbook"
+            }
+        }
+    ],
+    "outputs": {
+        "workbookId": {
+            "type": "string",
+            "value": "[resourceId( 'microsoft.insights/workbooks', parameters('workbookId'))]"
+        }
+    },
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
+}
