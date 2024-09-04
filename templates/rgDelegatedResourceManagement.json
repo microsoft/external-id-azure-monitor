@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "externalTenantId": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the tenant id of the External tenant"
+            }
+        },
+        "groupId": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the group id of the admin in the External tenant"
+            }
+        },
+        "rgName": {
+            "type": "string"
+        }              
+    },
+    "variables": {
+        "mspRegistrationName": "[guid(parameters('externalTenantId'))]",
+        "mspAssignmentName": "[guid(parameters('externalTenantId'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ManagedServices/registrationDefinitions",
+            "apiVersion": "2022-10-01",
+            "name": "[variables('mspRegistrationName')]",
+            "properties": {
+                "registrationDefinitionName": "ExternalTenantSubscriptionConnection",
+                "description": "Enables an admin group from the External tenant to set up diagnostic settings and send logs to Log Analytics workspace in the Workforce tenant.",
+                "managedByTenantId": "[parameters('externalTenantId')]",
+                "authorizations":
+                [
+                  {
+                    "principalId": "[parameters('groupId')]",
+                    "principalIdDisplayName": "DiagnosticSettingsAdmin",
+                    "roleDefinitionId": "92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+                  }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "rgAssignment",
+            "resourceGroup": "[parameters('rgName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
+            ],
+            "properties":{
+                "mode":"Incremental",
+                "template":{
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.ManagedServices/registrationAssignments",
+                            "apiVersion": "2022-10-01",
+                            "name": "[variables('mspAssignmentName')]",
+                            "properties": {
+                                "registrationDefinitionId": "[resourceId('Microsoft.ManagedServices/registrationDefinitions/', variables('mspRegistrationName'))]"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
