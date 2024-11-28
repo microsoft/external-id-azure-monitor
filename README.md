@@ -36,13 +36,13 @@ All the reports in this repo are based on [Azure Monitor Workbooks](https://docs
 
 ### Deploy workbooks via ARM template
 
-| Name      | Deploy |
-| ----------- | ----------- |
-| Authentications Workbook      |<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FauthenticationsWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
-| MFA Overview and MFA Failures Workbook      |<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FmfaWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
-| User Behaviour Workbook      |<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FuserBehaviourWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
-| Risk Detection Workbook      |<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FriskDetectionWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
-| Conditional Access Workbook      |<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FconditionalAccessWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
+| Name      | Workbook Id | Deploy |
+| --------- | ------------| ------ |
+| Authentications Workbook      |d284045e-b1c1-4d82-a8b8-b1a59a98eb33|<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FauthenticationsWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
+| MFA Overview and MFA Failures Workbook      |f405c652-7c08-47b9-8005-dc33ae331748|<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FmfaWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
+| User Behaviour Workbook      |65bf1d28-2dc8-4099-8cb1-e3f4a2f32256|<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FuserBehaviourWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
+| Risk Detection Workbook      |0d8084bd-cc7d-4670-988a-ee9553a19fa2|<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FriskDetectionWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
+| Conditional Access Workbook      |a9f52ac8-7a5d-4f86-86b8-092a74410758|<a href=https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fexternal-id-azure-monitor%2Fmain%2Ftemplates%2FconditionalAccessWorkbookDeployment.json data-linktype="external"><img src=https://aka.ms/deploytoazurebutton alt="Deploy to Azure" data-linktype="external"></a>    |
 
 ## Contributing
 
