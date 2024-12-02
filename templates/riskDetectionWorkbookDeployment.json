@@ -1,5 +1,5 @@
 {
-  "contentVersion": "1.0.0.0",
+  "contentVersion": "2.0.0.0",
   "parameters": {
     "workbookDisplayName": {
       "type": "string",
@@ -14,18 +14,11 @@
       "metadata": {
         "description": "The name of workspace where this workbook will be deployed"
       }
-    },
-    "workbookId": {
-      "type": "string",
-      "defaultValue": "[newGuid()]",
-      "metadata": {
-        "description": "The unique guid for this workbook instance"
-      }
     }
   },
   "resources": [
     {
-      "name": "[parameters('workbookId')]",
+      "name": "0d8084bd-cc7d-4670-988a-ee9553a19fa2",
       "type": "microsoft.insights/workbooks",
       "location": "[resourceGroup().location]",
       "kind": "shared",
@@ -43,7 +36,7 @@
   "outputs": {
     "workbookId": {
       "type": "string",
-      "value": "[resourceId( 'Microsoft.Insights/workbooks', parameters('workbookId'))]"
+      "value": "[resourceId( 'Microsoft.Insights/workbooks', '0d8084bd-cc7d-4670-988a-ee9553a19fa2')]"
     }
   },
   "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#"
